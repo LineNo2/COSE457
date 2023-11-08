@@ -5,6 +5,7 @@ interface ShapeInterface {
     getFillColor(): string;
     getId(): string;
     getZIndex(): number;
+    getType(): string;
     move(dx: number, dy: number): void;
     resize(scale: number): void;
     getBoundingBox(): BoundingBoxInterface;
@@ -56,6 +57,8 @@ abstract class AbstractShapeModel implements ShapeInterface {
         this.x += dx;
         this.y += dy;
     }
+
+    abstract getType(): string;
 
     abstract resize(scale: number): void;
 

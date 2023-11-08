@@ -22,6 +22,10 @@ class CircleModel extends AbstractShapeModel {
         );
     }
 
+    getType(): string {
+        return "circle";
+    }
+
     containsPoint(x: number, y: number): boolean {
         var centerX = this.x + this.radius;
         var centerY = this.y + this.radius;

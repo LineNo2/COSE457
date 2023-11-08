@@ -30,6 +30,10 @@ class ElipseModel extends AbstractShapeModel {
         );
     }
 
+    getType(): string {
+        return "elipse";
+    }
+
     containsPoint(x: number, y: number): boolean {
         var centerX = this.x + this.radiusX;
         var centerY = this.y + this.radiusY;

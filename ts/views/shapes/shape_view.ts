@@ -79,4 +79,37 @@ class ShapeView {
         });
         this.canvas.add(_boundingBox);
     }
+
+    eraseBoundingBox(): void {
+        this.canvas.remove(this.canvas.getObjects()[this.canvas.getObjects().length - 1]);
+    }
+
+    renderProperties(selectedShape: AbstractShapeModel): void {
+        const properties = document.getElementById("properties");
+        if (properties == null) return;
+        properties.innerHTML = "";
+        if (selectedShape == null) return;
+        const shape = selectedShape;
+        let propertyDict = {
+            "id": shape.getId(),
+            "x": shape.getX().toString(),
+            "y": shape.getY().toString(),
+            "fillColor": shape.getFillColor(),
+            "borderColor": shape.getBorderColor(),
+            "type": shape.getType()
+        };
+        Object.entries(propertyDict).forEach(([key, value]) => {
+            let property = document.createElement("div");
+            property.className = "property";
+            let propertyName = document.createElement("div");
+            propertyName.className = "property-name";
+            propertyName.innerHTML = key;
+            let propertyValue = document.createElement("div");
+            propertyValue.className = "property-value";
+            propertyValue.innerHTML = value;
+            property.appendChild(propertyName);
+            property.appendChild(propertyValue);
+            properties!.appendChild(property); // since null checked, ! is safe
+        });
+    }
 }
