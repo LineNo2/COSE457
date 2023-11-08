@@ -1,33 +1,19 @@
-class Rectangle implements ShapeInterface {
-    private x: number;
-    private y: number;
+class RectangleModel extends AbstractShapeModel {
     private width: number;
     private height: number;
 
-    constructor(x: number, y: number, width: number, height: number) {
-        this.x = x;
-        this.y = y;
+    constructor(x: number, y: number, borderColor: string, fillColor: string, id: string, zIndex: number, width: number, height: number) {
+        super(x, y, borderColor, fillColor, id, zIndex);
         this.width = width;
         this.height = height;
     }
 
-    draw(canvas: fabric.Canvas): void {
-        canvas.add(new fabric.Rect({
-            left: this.x,
-            top: this.y,
-            width: this.width,
-            height: this.height,
-            fill: 'transparent',
-            stroke: 'black',
-            strokeWidth: 2,
-            selectable: false
-        }));
+    getWidth(): number {
+        return this.width;
     }
 
-
-    move(dx: number, dy: number): void {
-        this.x += dx;
-        this.y += dy;
+    getHeight(): number {
+        return this.height;
     }
 
     resize(scale: number): void {
@@ -36,10 +22,15 @@ class Rectangle implements ShapeInterface {
     }
 
     getBoundingBox(): BoundingBoxInterface {
-        return new DefaultBoundingBoxInterface(this.x, this.y, this.width, this.height);
+        return BoundingBoxFactory.createBoundingBoxRectangle(
+            this.x,
+            this.y,
+            this.width,
+            this.height
+        );
     }
 
-    drawBoundingBox(canvas: fabric.Canvas): void {
-        this.getBoundingBox().draw(canvas);
+    containsPoint(x: number, y: number): boolean {
+        return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height;
     }
 }

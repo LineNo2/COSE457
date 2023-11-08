@@ -1,4 +1,4 @@
-class DefaultBoundingBoxInterface implements BoundingBoxInterface {
+class DefaultBoundingBoxModel implements BoundingBoxInterface {
     private readonly x: number;
     private readonly y: number;
     private readonly width: number;
@@ -12,31 +12,43 @@ class DefaultBoundingBoxInterface implements BoundingBoxInterface {
     }
 
     getX(): number {
-        return this.x;
+        return this.x - 5;
     }
 
     getY(): number {
-        return this.y;
+        return this.y - 5;
     }
 
     getWidth(): number {
-        return this.width;
+        return this.width + 10;
     }
 
     getHeight(): number {
-        return this.height;
+        return this.height + 10;
+    }
+}
+
+class BoundingBoxFactory {
+    static createBoundingBoxRectangle(x: number, y: number, width: number, height: number): BoundingBoxInterface {
+        return new DefaultBoundingBoxModel(x, y, width, height);
     }
 
-    draw(canvas: fabric.Canvas): void {
-        canvas.add(new fabric.Rect({
-            left: this.x,
-            top: this.y,
-            width: this.width,
-            height: this.height,
-            fill: 'transparent',
-            stroke: 'blue',
-            strokeWidth: 2,
-            selectable: false
-        }));
+    static createBoundingBoxCircle(x: number, y: number, radius: number): BoundingBoxInterface {
+        console.log(x, y, radius);
+        return new DefaultBoundingBoxModel(
+            x,
+            y,
+            radius * 2,
+            radius * 2,
+        );
+    }
+
+    static createBoundingBoxEllipse(x: number, y: number, radiusX: number, radiusY: number): BoundingBoxInterface {
+        return new DefaultBoundingBoxModel(
+            x,
+            y,
+            radiusX * 2,
+            radiusY * 2,
+        );
     }
 }

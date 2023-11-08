@@ -1,32 +1,19 @@
-class ElipseModel implements ShapeInterface {
-    private x: number;
-    private y: number;
+class ElipseModel extends AbstractShapeModel {
     private radiusX: number;
     private radiusY: number;
 
-    constructor(x: number, y: number, radiusX: number, radiusY: number) {
-        this.x = x;
-        this.y = y;
+    constructor(x: number, y: number, borderColor: string, fillColor: string, id: string, zIndex: number, radiusX: number, radiusY: number) {
+        super(x, y, borderColor, fillColor, id, zIndex);
         this.radiusX = radiusX;
         this.radiusY = radiusY;
     }
 
-    draw(canvas: fabric.Canvas): void {
-        canvas.add(new fabric.Ellipse({
-            left: this.x,
-            top: this.y,
-            rx: this.radiusX,
-            ry: this.radiusY,
-            fill: 'transparent',
-            stroke: 'black',
-            strokeWidth: 2,
-            selectable: false
-        }));
+    getRadiusX(): number {
+        return this.radiusX;
     }
 
-    move(dx: number, dy: number): void {
-        this.x += dx;
-        this.y += dy;
+    getRadiusY(): number {
+        return this.radiusY;
     }
 
     resize(scale: number): void {
@@ -35,10 +22,17 @@ class ElipseModel implements ShapeInterface {
     }
 
     getBoundingBox(): BoundingBoxInterface {
-        return new DefaultBoundingBoxInterface(this.x - this.radiusX, this.y - this.radiusY, this.radiusX * 2, this.radiusY * 2);
+        return BoundingBoxFactory.createBoundingBoxEllipse(
+            this.x,
+            this.y,
+            this.radiusX,
+            this.radiusY
+        );
     }
 
-    drawBoundingBox(canvas: fabric.Canvas): void {
-        this.getBoundingBox().draw(canvas);
+    containsPoint(x: number, y: number): boolean {
+        var centerX = this.x + this.radiusX;
+        var centerY = this.y + this.radiusY;
+        return Math.pow(x - centerX, 2) / Math.pow(this.radiusX, 2) + Math.pow(y - centerY, 2) / Math.pow(this.radiusY, 2) <= 1;
     }
 }

@@ -1,30 +1,13 @@
-class CircleModel implements ShapeInterface {
-    private x: number;
-    private y: number;
+class CircleModel extends AbstractShapeModel {
     private radius: number;
 
-    constructor(x: number, y: number, radius: number) {
-        this.x = x;
-        this.y = y;
+    constructor(x: number, y: number, borderColor: string, fillColor: string, id: string, zIndex: number, radius: number) {
+        super(x, y, borderColor, fillColor, id, zIndex);
         this.radius = radius;
     }
 
-    draw(canvas: fabric.Canvas): void {
-        canvas.add(new fabric.Circle({
-            left: this.x,
-            top: this.y,
-            radius: this.radius,
-            fill: 'transparent',
-            stroke: 'black',
-            strokeWidth: 2,
-            selectable: false
-        }));
-    }
-
-
-    move(dx: number, dy: number): void {
-        this.x += dx;
-        this.y += dy;
+    getRadius(): number {
+        return this.radius;
     }
 
     resize(scale: number): void {
@@ -32,10 +15,16 @@ class CircleModel implements ShapeInterface {
     }
 
     getBoundingBox(): BoundingBoxInterface {
-        return new DefaultBoundingBoxInterface(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+        return BoundingBoxFactory.createBoundingBoxCircle(
+            this.x,
+            this.y,
+            this.radius
+        );
     }
 
-    drawBoundingBox(canvas: fabric.Canvas): void {
-        this.getBoundingBox().draw(canvas);
+    containsPoint(x: number, y: number): boolean {
+        var centerX = this.x + this.radius;
+        var centerY = this.y + this.radius;
+        return Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2) <= Math.pow(this.radius, 2);
     }
 }
