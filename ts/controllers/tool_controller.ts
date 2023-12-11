@@ -1,9 +1,12 @@
-class ToolController {
+import { ToolModelInterface } from "../models/interfaces/tool_model_interface";
+import { ToolsView } from "../views/tools_view";
+
+export class ToolController {
     private tools: ToolModelInterface[];
     private selectedTool: ToolModelInterface | null;
     private view: ToolsView;
 
-    constructor(view: ToolsView, onToolSelect: (tool: ToolModelInterface) => void) {
+    constructor(view: ToolsView) {
         this.tools = [];
         this.selectedTool = null;
         this.view = view;

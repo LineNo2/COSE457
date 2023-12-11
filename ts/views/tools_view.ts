@@ -1,4 +1,6 @@
-class ToolsView {
+import { ToolModelInterface } from "../models/interfaces/tool_model_interface";
+
+export class ToolsView {
     private parents: HTMLElement;
     private onToolSelect: (tool: ToolModelInterface) => void;
 

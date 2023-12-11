@@ -1,9 +1,8 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "module": "System",
+        "module": "ESNext",
         "outDir": "dist",
-        "outFile": "dist/MVC.js",
         "strict": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,

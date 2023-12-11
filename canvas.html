@@ -4,19 +4,33 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Fabric.js Demo</title>
-	<link rel="stylesheet" href="style.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+	<script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+	<style>
+		.canvas-container {
+			position: absolute !important;
+		}
+
+		.canvas-container>canvas {
+			top: 200px;
+		}
+	</style>
 
 <body>
 	<!-- buttons for drawing rectangle, circle, elipse-->
 	<div id="toolbar">
 	</div>
-	<canvas id="c" width="1920" height="720">
-	</canvas>
+	<div id="canvas-wrapper">
+		<canvas id="upper-c" width="1920" height="720" style="position: absolute; top:200px">
+		</canvas>
+		<canvas id="c" width="1920" height="720" style="position: absolute; top:200px; z-index: 999;">
+		</canvas>
 	</div>
 	<div id="properties"> </div>
 	<script src="dist/MVC.js"></script>
-	<script src="script.js"></script>
+	<script type="module" src="http://127.0.0.1:5500/dist/index.js"></script>
+	<script>
+	</script>
 
 </body>
 

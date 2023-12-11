@@ -1,16 +1,18 @@
-class RectangleTool extends AbstractToolModel {
+import { AbstractToolModel, ToolType } from "../interfaces/tool_model_interface";
+
+export class RectangleTool extends AbstractToolModel {
     constructor() {
         super("Rectangle", ToolType.rectangle);
     }
 }
 
-class CircleTool extends AbstractToolModel {
+export class CircleTool extends AbstractToolModel {
     constructor() {
         super("Circle", ToolType.circle);
     }
 }
 
-class EllipseTool extends AbstractToolModel {
+export class EllipseTool extends AbstractToolModel {
     constructor() {
         super("Ellipse", ToolType.elipse);
     }

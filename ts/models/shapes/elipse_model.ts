@@ -1,4 +1,7 @@
-class ElipseModel extends AbstractShapeModel {
+import { AbstractCanvas } from "../../views/interfaces/canvas_interface";
+import { AbstractShapeModel } from "../interfaces/shape_model_interface";
+
+export class ElipseModel extends AbstractShapeModel {
     private radiusX: number;
     private radiusY: number;
 
@@ -38,5 +41,9 @@ class ElipseModel extends AbstractShapeModel {
         var centerX = this.x + this.radiusX;
         var centerY = this.y + this.radiusY;
         return Math.pow(x - centerX, 2) / Math.pow(this.radiusX, 2) + Math.pow(y - centerY, 2) / Math.pow(this.radiusY, 2) <= 1;
+    }
+
+    draw(canvas: AbstractCanvas): void {
+        canvas.drawEllipse(this.x, this.y, this.radiusX, this.radiusY, this.borderColor, this.fillColor);
     }
 }

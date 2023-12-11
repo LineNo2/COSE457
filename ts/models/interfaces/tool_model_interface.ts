@@ -1,4 +1,4 @@
-enum ToolType {
+export enum ToolType {
     elipse,
     rectangle,
     circle,
@@ -8,12 +8,12 @@ enum ToolType {
     image,
 }
 
-interface ToolModelInterface {
+export interface ToolModelInterface {
     getToolName(): string;
     getToolAction(): ToolType;
 }
 
-abstract class AbstractToolModel implements ToolModelInterface {
+export abstract class AbstractToolModel implements ToolModelInterface {
     protected toolName: string;
     protected toolAction: ToolType;
 

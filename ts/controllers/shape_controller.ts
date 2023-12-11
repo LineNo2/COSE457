@@ -1,9 +1,12 @@
-class ShapeController {
+import { AbstractShapeModel } from "../models/interfaces/shape_model_interface";
+import { CanvasView } from "../views/canvas_view";
+
+export class ShapeController {
     private shapes: AbstractShapeModel[];
     private selectedShape: AbstractShapeModel | null;
-    private view: ShapeView;
+    private view: CanvasView;
 
-    constructor(view: ShapeView) {
+    constructor(view: CanvasView) {
         this.shapes = [];
         this.selectedShape = null;
         this.view = view;
@@ -40,7 +43,7 @@ class ShapeController {
 
     drawSelectedShape(): void {
         if (this.selectedShape == null) return;
-        this.view.drawBoundingBox(this.selectedShape.getBoundingBox());
+        this.view.drawBoundingBox(this.selectedShape);
     }
 
     eraseSelectedShape(): void {

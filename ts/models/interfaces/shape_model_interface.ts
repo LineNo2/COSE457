@@ -1,3 +1,5 @@
+import { AbstractCanvas } from "../../views/interfaces/canvas_interface";
+
 interface ShapeInterface {
     getX(): number;
     getY(): number;
@@ -10,9 +12,11 @@ interface ShapeInterface {
     resize(scale: number): void;
     getBoundingBox(): BoundingBoxInterface;
     containsPoint(x: number, y: number): boolean;
+    draw(canvas: AbstractCanvas): void;
+    drawBoundingBox(canvas: AbstractCanvas): void;
 }
 
-abstract class AbstractShapeModel implements ShapeInterface {
+export abstract class AbstractShapeModel implements ShapeInterface {
     protected x: number;
     protected y: number;
     protected borderColor: string;
@@ -65,4 +69,11 @@ abstract class AbstractShapeModel implements ShapeInterface {
     abstract getBoundingBox(): BoundingBoxInterface;
 
     abstract containsPoint(x: number, y: number): boolean;
+
+    abstract draw(canvas: AbstractCanvas): void;
+
+    drawBoundingBox(canvas: AbstractCanvas): void {
+        const boundingBox = this.getBoundingBox();
+        canvas.drawBoundingBox(boundingBox.getX(), boundingBox.getY(), boundingBox.getWidth(), boundingBox.getHeight());
+    }
 }

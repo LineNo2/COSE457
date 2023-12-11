@@ -1,4 +1,7 @@
-class RectangleModel extends AbstractShapeModel {
+import { AbstractCanvas } from "../../views/interfaces/canvas_interface";
+import { AbstractShapeModel } from "../interfaces/shape_model_interface";
+
+export class RectangleModel extends AbstractShapeModel {
     private width: number;
     private height: number;
 
@@ -36,5 +39,9 @@ class RectangleModel extends AbstractShapeModel {
 
     containsPoint(x: number, y: number): boolean {
         return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height;
+    }
+
+    draw(canvas: AbstractCanvas): void {
+        canvas.drawRectangle(this.x, this.y, this.width, this.height, this.borderColor, this.fillColor);
     }
 }
