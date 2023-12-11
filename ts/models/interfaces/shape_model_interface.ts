@@ -74,6 +74,6 @@ export abstract class AbstractShapeModel implements ShapeInterface {
 
     drawBoundingBox(canvas: AbstractCanvas): void {
         const boundingBox = this.getBoundingBox();
-        canvas.drawBoundingBox(boundingBox.getX(), boundingBox.getY(), boundingBox.getWidth(), boundingBox.getHeight());
+        canvas.drawBoundingBox(boundingBox);
     }
 }

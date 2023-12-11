@@ -1,8 +1,11 @@
+import { AbstractShapeModel } from "../models/interfaces/shape_model_interface";
+import { ElipseModel } from "../models/shapes/elipse_model";
+import { RectangleModel } from "../models/shapes/rectangle_model";
 import { AbstractCanvas } from "./interfaces/canvas_interface";
 
-class VanillaCanvas extends AbstractCanvas {
-    protected canvas: HTMLCanvasElement;
-    protected upperCanvas: HTMLCanvasElement;
+export class VanillaCanvas extends AbstractCanvas {
+    canvas: HTMLCanvasElement;
+    upperCanvas: HTMLCanvasElement;
     protected context: CanvasRenderingContext2D;
     protected upperContext: CanvasRenderingContext2D;
 
@@ -23,31 +26,28 @@ class VanillaCanvas extends AbstractCanvas {
         this.upperContext = _upperContext;
     }
 
-    drawEllipse(x: number, y: number, width: number, height: number, borderColor: string, fillColor: string): void {
+    drawEllipse(model: ElipseModel): void {
         this.context.beginPath();
-        this.context.ellipse(x, y, width, height, 0, 0, 2 * Math.PI);
-        this.context.fillStyle = fillColor;
+        this.context.ellipse(model.getCenterX(), model.getCenterY(), model.getRadiusX(), model.getRadiusY(), 0, 0, 2 * Math.PI);
+        this.context.fillStyle = model.getFillColor();
         this.context.fill();
-        this.context.lineWidth = 1;
-        this.context.strokeStyle = borderColor;
+        this.context.strokeStyle = model.getBorderColor();
         this.context.stroke();
     }
 
-    drawRectangle(x: number, y: number, width: number, height: number, borderColor: string, fillColor: string): void {
+    drawRectangle(model: RectangleModel): void {
         this.context.beginPath();
-        this.context.rect(x, y, width, height);
-        this.context.fillStyle = fillColor;
+        this.context.rect(model.getX(), model.getY(), model.getWidth(), model.getHeight());
+        this.context.fillStyle = model.getFillColor();
         this.context.fill();
-        this.context.lineWidth = 1;
-        this.context.strokeStyle = borderColor;
+        this.context.strokeStyle = model.getBorderColor();
         this.context.stroke();
     }
 
-    drawBoundingBox(x: number, y: number, width: number, height: number): void {
+    drawBoundingBox(model: BoundingBoxInterface): void {
         this.eraseBoundingBox();
         this.upperContext.beginPath();
-        this.upperContext.rect(x, y, width, height);
-        this.upperContext.lineWidth = 1;
+        this.upperContext.rect(model.getX(), model.getY(), model.getWidth(), model.getHeight());
         this.upperContext.strokeStyle = "red";
         this.upperContext.stroke();
     }

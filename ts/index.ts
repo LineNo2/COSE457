@@ -7,12 +7,18 @@ import { CanvasView } from "./views/canvas_view";
 import { ToolController } from "./controllers/tool_controller";
 import { ToolsView } from "./views/tools_view";
 import { CircleTool, EllipseTool, RectangleTool } from "./models/tools/tools_model";
+import { VanillaCanvas } from "./views/vanilla_canvas";
 
 // implict import that this use Rectangle and ShapeController clas
-let _upperCanvas = new fabric.Canvas('upper-c');
-let _canvas = new fabric.Canvas('c',);
+// let _upperCanvas = new fabric.Canvas('upper-c');
+// let _canvas = new fabric.Canvas('c',);
 
-let canvas = new FabricCanvas(_canvas, _upperCanvas);
+// let canvas = new FabricCanvas(_canvas, _upperCanvas);
+
+let _upperCanvas = document.getElementById('upper-c') as HTMLCanvasElement;
+let _canvas = document.getElementById('c') as HTMLCanvasElement;
+
+let canvas = new VanillaCanvas(_canvas, _upperCanvas);
 
 let view = new CanvasView(canvas);
 let controller = new ShapeController(view);
@@ -32,10 +38,9 @@ toolbarController.addTool(new CircleTool());
 toolbarController.addTool(new EllipseTool());
 toolbarController.drawTools();
 
-canvas.canvas.on('mouse:down', function (options) {
-    let pointer = canvas.canvas.getPointer(options.e);
-    let x = pointer.x;
-    let y = pointer.y;
+canvas.canvas.onmousedown = function (event) {
+    let x = event.offsetX;
+    let y = event.offsetY;
     let shape;
     if (toolbarController.getSelectedTool() == null) {
         controller.onMouseDown(x, y);
@@ -61,7 +66,39 @@ canvas.canvas.on('mouse:down', function (options) {
     controller.addShape(shape);
     controller.drawShapes();
     toolbarController.resetSelectedTool();
-});
+};
+
+
+// canvas.canvas.on('mouse:down', function (options) {
+//     let pointer = canvas.canvas.getPointer(options.e);
+//     let x = pointer.x;
+//     let y = pointer.y;
+//     let shape;
+//     if (toolbarController.getSelectedTool() == null) {
+//         controller.onMouseDown(x, y);
+//         return;
+//     }
+//     let tool = toolbarController.getSelectedTool();
+//     let index = controller.getCurrentZIndex();
+//     let name = index.toString();
+//     if (tool instanceof RectangleTool) {
+//         shape = new RectangleModel(
+//             x, y, 'red', 'black', name + '-Rect', index, 100, 100
+//         );
+//     }
+//     else if (tool instanceof EllipseTool) {
+//         shape = new ElipseModel(
+//             x, y, 'black', 'blue', name + '-Elipse', index, 100, 50
+//         );
+
+//     }
+//     else {
+//         throw new Error("Unknown tool type");
+//     }
+//     controller.addShape(shape);
+//     controller.drawShapes();
+//     toolbarController.resetSelectedTool();
+// });
 
 // controller.addShape(rectangle);
 // controller.addShape(circle);

@@ -19,6 +19,14 @@ export class ElipseModel extends AbstractShapeModel {
         return this.radiusY;
     }
 
+    getCenterX(): number {
+        return this.x + this.radiusX;
+    }
+
+    getCenterY(): number {
+        return this.y + this.radiusY;
+    }
+
     resize(scale: number): void {
         this.radiusX *= scale;
         this.radiusY *= scale;
@@ -44,6 +52,10 @@ export class ElipseModel extends AbstractShapeModel {
     }
 
     draw(canvas: AbstractCanvas): void {
-        canvas.drawEllipse(this.x, this.y, this.radiusX, this.radiusY, this.borderColor, this.fillColor);
+        canvas.drawEllipse(this);
+    }
+
+    drawBoundingBox(canvas: AbstractCanvas): void {
+        canvas.drawBoundingBox(this.getBoundingBox());
     }
 }

@@ -42,6 +42,10 @@ export class RectangleModel extends AbstractShapeModel {
     }
 
     draw(canvas: AbstractCanvas): void {
-        canvas.drawRectangle(this.x, this.y, this.width, this.height, this.borderColor, this.fillColor);
+        canvas.drawRectangle(this);
+    }
+
+    drawBoundingBox(canvas: AbstractCanvas): void {
+        canvas.drawBoundingBox(this.getBoundingBox());
     }
 }

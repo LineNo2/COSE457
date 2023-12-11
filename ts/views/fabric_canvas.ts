@@ -1,5 +1,7 @@
 import fabric from "fabric/fabric-impl";
 import { AbstractCanvas } from "./interfaces/canvas_interface";
+import { ElipseModel } from "../models/shapes/elipse_model";
+import { RectangleModel } from "../models/shapes/rectangle_model";
 
 export class FabricCanvas extends AbstractCanvas {
     canvas: fabric.Canvas;
@@ -11,47 +13,47 @@ export class FabricCanvas extends AbstractCanvas {
         this.upperCanvas = upperCanvas;
     }
 
-    drawEllipse(x: number, y: number, width: number, height: number, borderColor: string, fillColor: string): void {
+    drawEllipse(model: ElipseModel): void {
         var ellipse = new fabric.Ellipse({
-            left: x,
-            top: y,
-            fill: fillColor,
-            rx: width,
-            ry: height,
-            stroke: borderColor,
-            strokeWidth: 1,
+            left: model.getX(),
+            top: model.getY(),
+            fill: model.getFillColor(),
+            stroke: model.getBorderColor(),
+            strokeWidth: 3,
+            rx: model.getRadiusX(),
+            ry: model.getRadiusY(),
             selectable: false
         });
         this.canvas.add(ellipse);
     }
 
-    drawRectangle(x: number, y: number, width: number, height: number, borderColor: string, fillColor: string): void {
+    drawRectangle(model: RectangleModel): void {
         var rect = new fabric.Rect({
-            left: x,
-            top: y,
-            fill: fillColor,
-            width: width,
-            height: height,
-            stroke: borderColor,
-            strokeWidth: 1,
+            left: model.getX(),
+            top: model.getY(),
+            fill: model.getFillColor(),
+            stroke: model.getBorderColor(),
+            strokeWidth: 3,
+            width: model.getWidth(),
+            height: model.getHeight(),
             selectable: false
         });
         this.canvas.add(rect);
     }
 
-    drawBoundingBox(x: number, y: number, width: number, height: number): void {
+    drawBoundingBox(model: BoundingBoxInterface): void {
         this.eraseBoundingBox();
-        let _boundingBox = new fabric.Rect({
-            left: x,
-            top: y,
-            fill: 'transparent',
-            width: width,
-            height: height,
-            stroke: 'red',
-            strokeWidth: 1,
+        var rect = new fabric.Rect({
+            left: model.getX(),
+            top: model.getY(),
+            fill: "transparent",
+            stroke: "red",
+            strokeWidth: 3,
+            width: model.getWidth(),
+            height: model.getHeight(),
             selectable: false
         });
-        this.upperCanvas.add(_boundingBox);
+        this.upperCanvas.add(rect);
     }
 
     eraseBoundingBox(): void {

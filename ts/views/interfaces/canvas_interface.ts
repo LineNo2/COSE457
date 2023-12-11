@@ -1,7 +1,10 @@
+import { ElipseModel } from "../../models/shapes/elipse_model";
+import { RectangleModel } from "../../models/shapes/rectangle_model";
+
 interface CanvasInterface {
-    drawEllipse(x: number, y: number, width: number, height: number, borderColor: string, fillColor: string): void;
-    drawRectangle(x: number, y: number, width: number, height: number, borderColor: string, fillColor: string): void;
-    drawBoundingBox(x: number, y: number, width: number, height: number): void;
+    drawEllipse(model: ElipseModel): void;
+    drawRectangle(model: RectangleModel): void;
+    drawBoundingBox(model: BoundingBoxInterface): void;
     eraseBoundingBox(): void;
     clear(): void;
 }
@@ -15,11 +18,11 @@ export abstract class AbstractCanvas implements CanvasInterface {
         this.upperCanvas = upperCanvas;
     }
 
-    abstract drawEllipse(x: number, y: number, width: number, height: number, borderColor: string, fillColor: string): void;
+    abstract drawEllipse(model: ElipseModel): void;
 
-    abstract drawRectangle(x: number, y: number, width: number, height: number, borderColor: string, fillColor: string): void;
+    abstract drawRectangle(model: RectangleModel): void;
 
-    abstract drawBoundingBox(x: number, y: number, width: number, height: number): void;
+    abstract drawBoundingBox(model: BoundingBoxInterface): void;
 
     abstract eraseBoundingBox(): void;
 
