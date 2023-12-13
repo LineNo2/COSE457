@@ -1,4 +1,4 @@
-import { AbstractCanvas } from "../../views/interfaces/canvas_interface";
+import { AbstractCanvas } from "../../views/canvas/canvas_interface";
 import { BoundingBoxFactory } from "../bounding_boxes/default_bounding_box_model";
 import { AbstractShapeModel } from "../interfaces/shape_model_interface";
 import { GuidingBox } from "./rectangle_model";

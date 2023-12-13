@@ -1,4 +1,4 @@
-import { AbstractCanvas } from "../../views/interfaces/canvas_interface";
+import { AbstractCanvas } from "../../views/canvas/canvas_interface";
 
 interface ShapeInterface {
     getX(): number;

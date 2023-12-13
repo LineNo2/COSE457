@@ -1,7 +1,7 @@
 import fabric from "fabric/fabric-impl";
-import { AbstractCanvas } from "./interfaces/canvas_interface";
-import { ElipseModel } from "../models/shapes/elipse_model";
-import { RectangleModel } from "../models/shapes/rectangle_model";
+import { AbstractCanvas } from "./canvas_interface";
+import { ElipseModel } from "../../models/shapes/elipse_model";
+import { RectangleModel } from "../../models/shapes/rectangle_model";
 
 export class FabricCanvas extends AbstractCanvas {
     canvas: fabric.Canvas;

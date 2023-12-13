@@ -1,11 +1,11 @@
 import fabric from "fabric/fabric-impl";
-import { FabricCanvas } from "./views/fabric_canvas";
+import { FabricCanvas } from "./views/canvas/fabric_canvas";
 import { ShapeController } from "./controllers/shape_controller";
-import { CanvasView } from "./views/canvas_view";
+import { CanvasView } from "./views/canvas/canvas_view";
 import { ToolController } from "./controllers/tool_controller";
 import { ToolsView } from "./views/tools_view";
 import { EllipseTool, RectangleTool } from "./models/tools/shape_tool_models";
-import { VanillaCanvas } from "./views/vanilla_canvas";
+import { VanillaCanvas } from "./views/canvas/vanilla_canvas";
 import { SelectTool } from "./models/tools/select_tool_model";
 
 // implict import that this use Rectangle and ShapeController clas

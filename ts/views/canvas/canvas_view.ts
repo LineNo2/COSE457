@@ -1,5 +1,5 @@
-import { AbstractShapeModel } from "../models/interfaces/shape_model_interface";
-import { AbstractCanvas } from "./interfaces/canvas_interface";
+import { AbstractShapeModel } from "../../models/interfaces/shape_model_interface";
+import { AbstractCanvas } from "./canvas_interface";
 
 export class CanvasView {
     private canvas: AbstractCanvas;

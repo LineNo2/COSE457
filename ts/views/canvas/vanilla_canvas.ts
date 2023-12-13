@@ -1,7 +1,7 @@
-import { AbstractShapeModel } from "../models/interfaces/shape_model_interface";
-import { ElipseModel } from "../models/shapes/elipse_model";
-import { RectangleModel } from "../models/shapes/rectangle_model";
-import { AbstractCanvas } from "./interfaces/canvas_interface";
+import { AbstractShapeModel } from "../../models/interfaces/shape_model_interface";
+import { ElipseModel } from "../../models/shapes/elipse_model";
+import { RectangleModel } from "../../models/shapes/rectangle_model";
+import { AbstractCanvas } from "./canvas_interface";
 
 export class VanillaCanvas extends AbstractCanvas {
     canvas: HTMLCanvasElement;

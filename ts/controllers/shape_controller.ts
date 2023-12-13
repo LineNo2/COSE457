@@ -1,6 +1,6 @@
 import { AbstractShapeModel } from "../models/interfaces/shape_model_interface";
 import { GuidingBox, RectangleModel } from "../models/shapes/rectangle_model";
-import { CanvasView } from "../views/canvas_view"
+import { CanvasView } from "../views/canvas/canvas_view"
 
 export class ShapeController {
     private static instance: ShapeController;
