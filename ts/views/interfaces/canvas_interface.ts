@@ -6,6 +6,10 @@ interface CanvasInterface {
     drawRectangle(model: RectangleModel): void;
     drawBoundingBox(model: BoundingBoxInterface): void;
     eraseBoundingBox(): void;
+    setOnMouseDown(callback: (event: any) => void): void;
+    setOnMouseUp(callback: (event: any) => void): void;
+    setOnMouseMove(callback: (event: any) => void): void;
+    setOnMouseOut(callback: (event: any) => void): void;
     clear(): void;
 }
 
@@ -26,5 +30,13 @@ export abstract class AbstractCanvas implements CanvasInterface {
 
     abstract eraseBoundingBox(): void;
 
+    abstract setOnMouseDown(callback: (event: any) => void): void;
+
+    abstract setOnMouseUp(callback: (event: any) => void): void;
+
+    abstract setOnMouseMove(callback: (event: any) => void): void;
+
+    abstract setOnMouseOut(callback: (event: any) => void): void;
+    
     abstract clear(): void;
 }

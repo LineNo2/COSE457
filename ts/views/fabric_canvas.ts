@@ -63,4 +63,20 @@ export class FabricCanvas extends AbstractCanvas {
     clear(): void {
         this.canvas.clear();
     }
+
+    setOnMouseDown(callback: (event: any) => void): void {
+        this.upperCanvas.on("mouse:down", callback);
+    }
+
+    setOnMouseUp(callback: (event: any) => void): void {
+        this.upperCanvas.on("mouse:up", callback);
+    }
+
+    setOnMouseMove(callback: (event: any) => void): void {
+        this.upperCanvas.on("mouse:move", callback);
+    }
+
+    setOnMouseOut(callback: (event: any) => void): void {
+        this.upperCanvas.on("mouse:out", callback);
+    }
 }

@@ -1,4 +1,4 @@
-class DefaultBoundingBoxModel implements BoundingBoxInterface {
+export class DefaultBoundingBoxModel implements BoundingBoxInterface {
     private readonly x: number;
     private readonly y: number;
     private readonly width: number;
@@ -12,23 +12,23 @@ class DefaultBoundingBoxModel implements BoundingBoxInterface {
     }
 
     getX(): number {
-        return this.x - 5;
+        return this.width > 0 ? this.x - 5 : this.x + 5;
     }
 
     getY(): number {
-        return this.y - 5;
+        return this.height > 0 ? this.y - 5 : this.y + 5;
     }
 
     getWidth(): number {
-        return this.width + 10;
+        return this.width > 0 ? this.width + 10: this.width - 10;
     }
 
     getHeight(): number {
-        return this.height + 10;
+        return this.height > 0 ? this.height + 10 : this.height - 10;
     }
 }
 
-class BoundingBoxFactory {
+export class BoundingBoxFactory {
     static createBoundingBoxRectangle(x: number, y: number, width: number, height: number): BoundingBoxInterface {
         return new DefaultBoundingBoxModel(x, y, width, height);
     }

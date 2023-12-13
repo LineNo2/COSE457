@@ -26,22 +26,22 @@ export class VanillaCanvas extends AbstractCanvas {
         this.upperContext = _upperContext;
     }
 
-    drawEllipse(model: ElipseModel): void {
-        this.context.beginPath();
-        this.context.ellipse(model.getCenterX(), model.getCenterY(), model.getRadiusX(), model.getRadiusY(), 0, 0, 2 * Math.PI);
-        this.context.fillStyle = model.getFillColor();
-        this.context.fill();
-        this.context.strokeStyle = model.getBorderColor();
-        this.context.stroke();
+    drawEllipse(model: ElipseModel, context = this.context): void {
+        context.beginPath();
+        context.ellipse(model.getCenterX(), model.getCenterY(), model.getRadiusX(), model.getRadiusY(), 0, 0, 2 * Math.PI);
+        context.fillStyle = model.getFillColor();
+        context.fill();
+        context.strokeStyle = model.getBorderColor();
+        context.stroke();
     }
 
-    drawRectangle(model: RectangleModel): void {
-        this.context.beginPath();
-        this.context.rect(model.getX(), model.getY(), model.getWidth(), model.getHeight());
-        this.context.fillStyle = model.getFillColor();
-        this.context.fill();
-        this.context.strokeStyle = model.getBorderColor();
-        this.context.stroke();
+    drawRectangle(model: RectangleModel, context = this.context): void {
+        context.beginPath();
+        context.rect(model.getX(), model.getY(), model.getWidth(), model.getHeight());
+        context.fillStyle = model.getFillColor();
+        context.fill();
+        context.strokeStyle = model.getBorderColor();
+        context.stroke();
     }
 
     drawBoundingBox(model: BoundingBoxInterface): void {
@@ -58,5 +58,21 @@ export class VanillaCanvas extends AbstractCanvas {
 
     clear(): void {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    setOnMouseDown(callback: (event: MouseEvent) => void): void {
+        this.upperCanvas.addEventListener("mousedown", callback);
+    }
+
+    setOnMouseUp(callback: (event: MouseEvent) => void): void {
+        this.upperCanvas.addEventListener("mouseup", callback);
+    }
+
+    setOnMouseMove(callback: (event: MouseEvent) => void): void {
+        this.upperCanvas.addEventListener("mousemove", callback);
+    }
+
+    setOnMouseOut(callback: (event: MouseEvent) => void): void {
+        this.upperCanvas.addEventListener("mouseout", callback);
     }
 }

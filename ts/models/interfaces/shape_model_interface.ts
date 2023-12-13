@@ -14,6 +14,7 @@ interface ShapeInterface {
     containsPoint(x: number, y: number): boolean;
     draw(canvas: AbstractCanvas): void;
     drawBoundingBox(canvas: AbstractCanvas): void;
+    replaceEndPoint(x: number, y: number): void;
 }
 
 export abstract class AbstractShapeModel implements ShapeInterface {
@@ -61,6 +62,8 @@ export abstract class AbstractShapeModel implements ShapeInterface {
         this.x += dx;
         this.y += dy;
     }
+
+    abstract replaceEndPoint(x: number, y: number): void;
 
     abstract getType(): string;
 

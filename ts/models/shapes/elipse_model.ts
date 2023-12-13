@@ -1,5 +1,7 @@
 import { AbstractCanvas } from "../../views/interfaces/canvas_interface";
+import { BoundingBoxFactory } from "../bounding_boxes/default_bounding_box_model";
 import { AbstractShapeModel } from "../interfaces/shape_model_interface";
+import { GuidingBox } from "./rectangle_model";
 
 export class ElipseModel extends AbstractShapeModel {
     private radiusX: number;
@@ -57,5 +59,10 @@ export class ElipseModel extends AbstractShapeModel {
 
     drawBoundingBox(canvas: AbstractCanvas): void {
         canvas.drawBoundingBox(this.getBoundingBox());
+    }
+
+    replaceEndPoint(x: number, y: number): void {
+        this.radiusX = x - this.x;
+        this.radiusY = y - this.y;
     }
 }
