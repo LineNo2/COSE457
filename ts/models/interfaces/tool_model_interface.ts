@@ -51,9 +51,21 @@ export abstract class AbstractToolModel implements ToolModelInterface {
 }
 
 export abstract class ShapeToolModel extends AbstractToolModel {
+    onMousedown(event: MouseEvent): void {
+        ShapeController.getInstance().setGuidingBox(event.offsetX, event.offsetY);
+    }
+
     onMouseup(event: MouseEvent): void {
         ShapeController.getInstance().onMouseUpWhenToolSelected(event, this.builder);
         ToolController.getInstance().resetSelectedTool();
+    }
+
+    onMousemove(event: MouseEvent): void {
+        ShapeController.getInstance().onMouseMoveWhenToolSelected(event);
+    }
+
+    onMouseout(event: MouseEvent): void {
+        throw new Error("Method not implemented.");
     }
 
     abstract builder(model: GuidingBox): AbstractShapeModel;

@@ -4,7 +4,7 @@ import { ShapeController } from "./controllers/shape_controller";
 import { CanvasView } from "./views/canvas_view";
 import { ToolController } from "./controllers/tool_controller";
 import { ToolsView } from "./views/tools_view";
-import { EllipseTool, RectangleTool } from "./models/tools/tools_model";
+import { EllipseTool, RectangleTool } from "./models/tools/shape_tool_models";
 import { VanillaCanvas } from "./views/vanilla_canvas";
 
 // implict import that this use Rectangle and ShapeController clas
@@ -38,14 +38,13 @@ toolbarController.drawTools();
 var mousePressed = false;
 
 canvas.setOnMouseDown((event: MouseEvent) => {
-    let x = event.offsetX;
-    let y = event.offsetY;
-    if (toolbarController.getSelectedTool() == null) {
-        controller.onMouseDown(x, y);
+    let tool = toolbarController.getSelectedTool();
+    if (tool == null) {
+        controller.onMouseDown(event);
         return;
     }
     mousePressed = true;
-    controller.setGuidingBox(x, y);
+    tool.onMousedown(event);
 });
 
 canvas.setOnMouseMove((event: MouseEvent) => {
@@ -53,14 +52,13 @@ canvas.setOnMouseMove((event: MouseEvent) => {
         return;
     }
 
-    if (toolbarController.getSelectedTool() == null) {
+    let tool = toolbarController.getSelectedTool();
+
+    if (tool == null) {
         return;
     }
 
-    let x = event.offsetX;
-    let y = event.offsetY;
-
-    controller.onMouseMoveWhenToolSelected(x, y);
+    tool.onMousemove(event);
 });
 
 canvas.setOnMouseUp((event: MouseEvent) => {

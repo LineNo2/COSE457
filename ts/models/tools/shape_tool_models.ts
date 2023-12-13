@@ -7,18 +7,7 @@ export class RectangleTool extends ShapeToolModel {
     constructor() {
         super("Rectangle", ToolType.rectangle);
     }
-
-    onMousedown(event: MouseEvent): void {
-    }
-
-    onMousemove(): void {
-        throw new Error("Method not implemented.");
-    }
-
-    onMouseout(): void {
-        throw new Error("Method not implemented.");
-    }
-
+    
     builder(guidingBox: GuidingBox): RectangleModel {
         let width = guidingBox.getWidth();
         let height = guidingBox.getHeight();
@@ -44,17 +33,6 @@ export class RectangleTool extends ShapeToolModel {
 export class EllipseTool extends ShapeToolModel {
     constructor() {
         super("Ellipse", ToolType.elipse);
-    }
-
-    onMousedown(event: MouseEvent): void {
-    }
-
-    onMousemove(): void {
-        throw new Error("Method not implemented.");
-    }
-
-    onMouseout(): void {
-        throw new Error("Method not implemented.");
     }
 
     builder(guidingBox: GuidingBox): ElipseModel {

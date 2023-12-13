@@ -72,8 +72,10 @@ export class ShapeController {
         this.view.eraseBoundingBox();
     }
 
-    onMouseDown(x: number, y: number): void {
+    onMouseDown(event: MouseEvent): void {
         for (let i = this.shapes.length - 1; i >= 0; i--) {
+            let x = event.offsetX;
+            let y = event.offsetY;
             if (this.shapes[i].containsPoint(x, y)) {
                 this.selectShape(this.shapes[i]);
                 break;
@@ -90,8 +92,10 @@ export class ShapeController {
         );
     }
 
-    onMouseMoveWhenToolSelected(x: number, y: number): void {
+    onMouseMoveWhenToolSelected(event: MouseEvent): void {
         if (this.guidingBox == null) return;
+        let x = event.offsetX;
+        let y = event.offsetY;
         this.replaceEndPoint(x, y);
     }
 
