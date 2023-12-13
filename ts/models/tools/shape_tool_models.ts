@@ -7,7 +7,7 @@ export class RectangleTool extends ShapeToolModel {
     constructor() {
         super("Rectangle", ToolType.rectangle);
     }
-    
+
     builder(guidingBox: GuidingBox): RectangleModel {
         let width = guidingBox.getWidth();
         let height = guidingBox.getHeight();

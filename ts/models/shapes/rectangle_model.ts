@@ -3,8 +3,8 @@ import { BoundingBoxFactory } from "../bounding_boxes/default_bounding_box_model
 import { AbstractShapeModel } from "../interfaces/shape_model_interface";
 
 export class RectangleModel extends AbstractShapeModel {
-    private width: number;
-    private height: number;
+    protected width: number;
+    protected height: number;
 
     constructor(x: number, y: number, borderColor: string, fillColor: string, id: string, zIndex: number, width: number, height: number) {
         super(x, y, borderColor, fillColor, id, zIndex);
@@ -56,6 +56,17 @@ export class RectangleModel extends AbstractShapeModel {
         this.width = x - this.x;
         this.height = y - this.y;
     }
+
+    adjustNegativeWidthAndHeight(): void {
+        if (this.width < 0) {
+            this.x += this.width;
+            this.width *= -1;
+        }
+        if (this.height < 0) {
+            this.y += this.height;
+            this.height *= -1;
+        }
+    }
 }
 
 export class GuidingBox extends RectangleModel {
@@ -69,5 +80,12 @@ export class GuidingBox extends RectangleModel {
 
     containsPoint(x: number, y: number): boolean {
         return false;
+    }
+
+    conatinsShape(shape: AbstractShapeModel): boolean {
+        let boundingBox = shape.getBoundingBox();
+        let isContainsX = (boundingBox.getX() >= this.x && boundingBox.getX() + boundingBox.getWidth() <= this.x + this.width);
+        let isContainsY = (boundingBox.getY() >= this.y && boundingBox.getY() + boundingBox.getHeight() <= this.y + this.height);
+        return isContainsX && isContainsY;
     }
 }

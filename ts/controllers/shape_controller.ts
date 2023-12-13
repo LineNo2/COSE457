@@ -1,4 +1,3 @@
-import { DefaultBoundingBoxModel } from "../models/bounding_boxes/default_bounding_box_model";
 import { AbstractShapeModel } from "../models/interfaces/shape_model_interface";
 import { GuidingBox, RectangleModel } from "../models/shapes/rectangle_model";
 import { CanvasView } from "../views/canvas_view"
@@ -6,13 +5,13 @@ import { CanvasView } from "../views/canvas_view"
 export class ShapeController {
     private static instance: ShapeController;
     private shapes: AbstractShapeModel[];
-    private selectedShape: AbstractShapeModel | null;
+    private selectedShapes: AbstractShapeModel[];
     private guidingBox: GuidingBox | null;
     private view: CanvasView;
 
     private constructor(view: CanvasView) {
         this.shapes = [];
-        this.selectedShape = null;
+        this.selectedShapes = [];
         this.guidingBox = null;
         this.view = view;
     }
@@ -48,8 +47,22 @@ export class ShapeController {
     }
 
     drawSelectedShape(): void {
-        if (this.selectedShape == null) return;
-        this.view.drawBoundingBox(this.selectedShape);
+        if (this.selectedShapes.length == 0) return;
+        let minX = this.selectedShapes[0].getBoundingBox().getX();
+        let minY = this.selectedShapes[0].getBoundingBox().getY();
+        let maxX = minX + this.selectedShapes[0].getBoundingBox().getWidth();
+        let maxY = minY + this.selectedShapes[0].getBoundingBox().getHeight();
+        for (let i = 1; i < this.selectedShapes.length; i++) {
+            let boundingBox = this.selectedShapes[i].getBoundingBox();
+            minX = Math.min(minX, boundingBox.getX());
+            minY = Math.min(minY, boundingBox.getY());
+            maxX = Math.max(maxX, boundingBox.getX() + boundingBox.getWidth());
+            maxY = Math.max(maxY, boundingBox.getY() + boundingBox.getHeight());
+        }
+        let newBoundingBox = new RectangleModel(
+            minX, minY, 'black', 'blue', 'selected', 0, maxX - minX, maxY - minY
+        );
+        this.view.drawBoundingBox(newBoundingBox);
     }
 
     darwGuidingBox(): void {
@@ -57,18 +70,18 @@ export class ShapeController {
         this.view.drawBoundingBox(this.guidingBox);
     }
 
-    selectShape(shape: AbstractShapeModel): void {
-        this.selectedShape = shape;
-        this.view.renderProperties(shape);
+    selectShapes(shape: AbstractShapeModel[]): void {
+        this.selectedShapes = shape;
+        this.view.renderProperties(this.selectedShapes);
         this.drawSelectedShape();
     }
 
-    getSelectedShape(): AbstractShapeModel | null {
-        return this.selectedShape;
+    getSelectedShapes(): AbstractShapeModel[] {
+        return this.selectedShapes;
     }
 
     eraseSelectedShape(): void {
-        if (this.selectedShape == null) return;
+        if (this.selectedShapes.length == 0) return;
         this.view.eraseBoundingBox();
     }
 
@@ -77,11 +90,25 @@ export class ShapeController {
             let x = event.offsetX;
             let y = event.offsetY;
             if (this.shapes[i].containsPoint(x, y)) {
-                this.selectShape(this.shapes[i]);
+                this.selectShapes([this.shapes[i]]);
                 break;
             }
         }
-        console.log(this.selectedShape);
+        console.log(this.selectedShapes);
+    }
+
+    selectMultipleShapes(): void {
+        if (this.guidingBox == null) return;
+        this.guidingBox.adjustNegativeWidthAndHeight();
+        let selectedShapes: AbstractShapeModel[] = [];
+        for (let shape of this.shapes) {
+            if (this.guidingBox.conatinsShape(shape)) {
+                selectedShapes.push(shape);
+            }
+        }
+
+        this.selectShapes(selectedShapes);
+        console.log(this.selectedShapes);
     }
 
     setGuidingBox(x: number, y: number): void {
