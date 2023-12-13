@@ -8,6 +8,7 @@ export enum ToolType {
     rectangle,
     circle,
     select,
+    group,
     line,
     text,
     image,
@@ -17,6 +18,7 @@ export interface ToolModelInterface {
     getToolName(): string;
     getToolAction(): ToolType;
 
+    onToolSelected(): void;
     onMousedown(event: MouseEvent): void;
     onMouseup(event: MouseEvent): void;
     onMousemove(event: MouseEvent): void;
@@ -39,6 +41,8 @@ export abstract class AbstractToolModel implements ToolModelInterface {
     getToolAction(): ToolType {
         return this.toolAction;
     }
+
+    onToolSelected(): void { }
 
     abstract onMousedown(event: MouseEvent): void;
 

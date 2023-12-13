@@ -7,6 +7,8 @@ import { ToolsView } from "./views/tools_view";
 import { EllipseTool, RectangleTool } from "./models/tools/shape_tool_models";
 import { VanillaCanvas } from "./views/canvas/vanilla_canvas";
 import { SelectTool } from "./models/tools/select_tool_model";
+import { SelectedToolObserver, SelectedToolSubject } from "./views/selected_tool_view";
+import { GroupTool } from "./models/tools/group_tool_model";
 
 // implict import that this use Rectangle and ShapeController clas
 // let _upperCanvas = new fabric.Canvas('upper-c');
@@ -35,6 +37,7 @@ let toolbarController = ToolController.getInstance(
 toolbarController.addTool(new RectangleTool());
 toolbarController.addTool(new EllipseTool());
 toolbarController.addTool(new SelectTool());
+toolbarController.addTool(new GroupTool());
 toolbarController.drawTools();
 
 var mousePressed = false;

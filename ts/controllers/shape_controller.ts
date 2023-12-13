@@ -1,4 +1,6 @@
+import { BoundingBoxFactory } from "../models/bounding_boxes/default_bounding_box_model";
 import { AbstractShapeModel } from "../models/interfaces/shape_model_interface";
+import { GroupedShapeModel } from "../models/shapes/grouped_model";
 import { GuidingBox, RectangleModel } from "../models/shapes/rectangle_model";
 import { CanvasView } from "../views/canvas/canvas_view"
 
@@ -38,6 +40,13 @@ export class ShapeController {
         this.sortShapes();
     }
 
+    removeShape(shape: AbstractShapeModel): void {
+        let index = this.shapes.indexOf(shape);
+        if (index > -1) {
+            this.shapes.splice(index, 1);
+        }
+    }
+
     getShapes(): AbstractShapeModel[] {
         return this.shapes;
     }
@@ -48,19 +57,27 @@ export class ShapeController {
 
     drawSelectedShape(): void {
         if (this.selectedShapes.length == 0) return;
-        let minX = this.selectedShapes[0].getBoundingBox().getX();
-        let minY = this.selectedShapes[0].getBoundingBox().getY();
-        let maxX = minX + this.selectedShapes[0].getBoundingBox().getWidth();
-        let maxY = minY + this.selectedShapes[0].getBoundingBox().getHeight();
-        for (let i = 1; i < this.selectedShapes.length; i++) {
-            let boundingBox = this.selectedShapes[i].getBoundingBox();
-            minX = Math.min(minX, boundingBox.getX());
-            minY = Math.min(minY, boundingBox.getY());
-            maxX = Math.max(maxX, boundingBox.getX() + boundingBox.getWidth());
-            maxY = Math.max(maxY, boundingBox.getY() + boundingBox.getHeight());
-        }
+        let tempBoundingBox = BoundingBoxFactory.createBoundingBoxGroupedShape(this.selectedShapes);
+        // let minX = this.selectedShapes[0].getBoundingBox().getX();
+        // let minY = this.selectedShapes[0].getBoundingBox().getY();
+        // let maxX = minX + this.selectedShapes[0].getBoundingBox().getWidth();
+        // let maxY = minY + this.selectedShapes[0].getBoundingBox().getHeight();
+        // for (let i = 1; i < this.selectedShapes.length; i++) {
+        //     let boundingBox = this.selectedShapes[i].getBoundingBox();
+        //     minX = Math.min(minX, boundingBox.getX());
+        //     minY = Math.min(minY, boundingBox.getY());
+        //     maxX = Math.max(maxX, boundingBox.getX() + boundingBox.getWidth());
+        //     maxY = Math.max(maxY, boundingBox.getY() + boundingBox.getHeight());
+        // }
         let newBoundingBox = new RectangleModel(
-            minX, minY, 'black', 'blue', 'selected', 0, maxX - minX, maxY - minY
+            tempBoundingBox.getX(),
+            tempBoundingBox.getY(),
+            'black',
+            'transparent',
+            'draw-guide',
+            0,
+            tempBoundingBox.getWidth(),
+            tempBoundingBox.getHeight()
         );
         this.view.drawBoundingBox(newBoundingBox);
     }
@@ -86,9 +103,9 @@ export class ShapeController {
     }
 
     onMouseDown(event: MouseEvent): void {
+        let x = event.offsetX;
+        let y = event.offsetY;
         for (let i = this.shapes.length - 1; i >= 0; i--) {
-            let x = event.offsetX;
-            let y = event.offsetY;
             if (this.shapes[i].containsPoint(x, y)) {
                 this.selectShapes([this.shapes[i]]);
                 break;
@@ -144,5 +161,27 @@ export class ShapeController {
     getCurrentZIndex(): number {
         if (this.shapes.length == 0) return 0;
         return this.shapes[this.shapes.length - 1].getZIndex() + 1;
+    }
+
+    groupShapes(): void {
+        if (this.selectedShapes.length == 0) return;
+        let index = this.getCurrentZIndex();
+        let name = index.toString();
+        let selectedShapes = this.selectedShapes;
+        let boundingBox = BoundingBoxFactory.createBoundingBoxGroupedShape(this.selectedShapes);
+        let shape = new GroupedShapeModel(
+            boundingBox.getX(),
+            boundingBox.getY(),
+            'black',
+            'transparent',
+            name + '-Group',
+            index,
+            selectedShapes,
+        );
+        selectedShapes.map((shape) => {
+            this.removeShape(shape);
+        });
+        this.addShape(shape);
+        this.drawShapes();
     }
 }
